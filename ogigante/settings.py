@@ -9,7 +9,10 @@ TEMPLATE_DEBUG = DEBUG
 RECAPTCHA_SECRET = os.environ.get('RECAPTCHA_SECRETE')
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Filipe Ximenes', 'filipeximenes@gmail.com'),
+    ('Fernando Rocha', 'fernandogrd@gmail.com'),
+    ('Patrick Costa', 'patrickrbcosta@gmail.com'),
+    ('Renato Oliveira', 'renatooliveira.cin@gmail.com'),
 )
 
 MANAGERS = ADMINS
