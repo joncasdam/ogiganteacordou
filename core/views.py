@@ -15,12 +15,8 @@ def index(request, filtro='all'):
     
     if filtro is 'all':
         entries = Entry.objects.filter(approved=True)
-    elif filtro is 'evento':
-        entries = Entry.objects.filter(approved=True, kind='evento')
-    elif filtro is 'link':
-        entries = Entry.objects.filter(approved=True, kind='link')
-    elif filtro is 'video':
-        entries = Entry.objects.filter(approved=True, kind='video')
+    elif filtro in ['evento', 'link', 'video']:
+        entries = Entry.objects.filter(approved=True, kind=filtro)
     else:
         return False
 
