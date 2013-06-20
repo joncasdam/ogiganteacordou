@@ -2,6 +2,30 @@
 
 {% block content %}
     {% load url from future %}
+    
+    
+    <!--botões de filtro [tudo, videos, links, eventos] -->
+    <div class="span4 offset2">
+            <ul class="nav nav-pills">
+                <li {%if filtro == 'all'%}class="active"{%endif%}>
+                    <a href="/">Tudo</a>
+                </li>
+                <li {%if filtro == 'link'%}class="active"{%endif%}>
+                    <a href="{% url 'link' %}">Links</a>
+                </li>
+                <li {%if filtro == 'video'%}class="active"{%endif%}>
+                    <a href="{% url 'video' %}">Vídeos</a>
+                </li>
+                <li {%if filtro == 'evento'%}class="active"{%endif%}>
+                    <a href="{% url 'evento' %}">Eventos</a>
+                </li>
+            </ul>
+    </div>
+    
+    
+    
+    
+    
     <div class="posts span8">
     {% for entry in entries %}
         <div class="post">

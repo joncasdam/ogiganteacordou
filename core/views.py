@@ -4,16 +4,25 @@ from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from recaptcha.client import captcha
+#from recaptcha.client import captcha
 
 from entry.models import Entry
 from entry.forms import NewEntryForm
 
 
-def index(request):
+def index(request, filtro='all'):
     context = {}
-
-    entries = Entry.objects.filter(approved=True)
+    
+    if filtro is 'all':
+        entries = Entry.objects.filter(approved=True)
+    elif filtro is 'evento':
+        entries = Entry.objects.filter(approved=True, kind='evento')
+    elif filtro is 'link':
+        entries = Entry.objects.filter(approved=True, kind='link')
+    elif filtro is 'video':
+        entries = Entry.objects.filter(approved=True, kind='video')
+    else:
+        return False
 
     paginator = Paginator(entries, 15)
 
@@ -26,6 +35,7 @@ def index(request):
         entries = paginator.page(paginator.num_pages)
 
     context['entries'] = entries
+    context['filtro'] = filtro
     return render(request, 'index.html', context)
 
 
@@ -49,21 +59,21 @@ def new_entry(request):
     form = NewEntryForm(request.POST or None)
     context['form'] = form
 
-    if request.method == 'POST':
-        resp = captcha.submit(
-            request.POST.get('recaptcha_challenge_field'),
-            request.POST.get('recaptcha_response_field'),
-            settings.RECAPTCHA_SECRET,
-            request.META['REMOTE_ADDR']
-        )
+    #if request.method == 'POST':
+    #    resp = captcha.submit(
+    #        request.POST.get('recaptcha_challenge_field'),
+    #        request.POST.get('recaptcha_response_field'),
+    #        settings.RECAPTCHA_SECRET,
+    #        request.META['REMOTE_ADDR']
+    #    )
 
-        if resp.is_valid and form.is_valid():
-            entry = form.save()
-            entry.save()
-            context['form'] = NewEntryForm()
-            context['success'] = True
-        else:
-            context['fail'] = True
+    #    if resp.is_valid and form.is_valid():
+    #        entry = form.save()
+    #        entry.save()
+    #        context['form'] = NewEntryForm()
+    #        context['success'] = True
+    #    else:
+    #        context['fail'] = True
 
     return render(request, 'new_entry.html', context)
 
