@@ -3,22 +3,23 @@
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import Http404
 
 from recaptcha.client import captcha
 
-from entry.models import Entry
+from entry.models import Entry, EntryTypes
 from entry.forms import NewEntryForm
 
 
-def index(request, filtro='all'):
+def index(request, filtro=None):
     context = {}
-    
+
     if filtro is 'all':
         entries = Entry.objects.filter(approved=True)
-    elif filtro in ['evento', 'link', 'video']:
+    elif filtro in [i for i, j in EntryTypes]:
         entries = Entry.objects.filter(approved=True, kind=filtro)
     else:
-        return False
+        raise Http404
 
     paginator = Paginator(entries, 15)
 
@@ -73,8 +74,10 @@ def new_entry(request):
 
     return render(request, 'new_entry.html', context)
 
+
 def erro404(request):
     return render(request, '404.html')
+
 
 def entry(request, entry_pk):
     entry = get_object_or_404(Entry, pk=int(entry_pk))
