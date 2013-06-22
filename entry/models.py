@@ -3,6 +3,7 @@ from django.db import models
 from core.models import TimeStampedModel
 import urlparse
 
+
 EntryTypes = [
     ('link', u'Link'),
     ('video', u'Vídeo'),

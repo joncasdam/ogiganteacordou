@@ -11,13 +11,13 @@ from entry.models import Entry, EntryTypes
 from entry.forms import NewEntryForm
 
 
-def index(request, filtro=None):
+def index(request, kind=None):
     context = {}
 
-    if filtro is 'all':
+    if kind is 'all':
         entries = Entry.objects.filter(approved=True)
-    elif filtro in [i for i, j in EntryTypes]:
-        entries = Entry.objects.filter(approved=True, kind=filtro)
+    elif kind in [i for i, j in EntryTypes]:
+        entries = Entry.objects.filter(approved=True, kind=kind)
     else:
         raise Http404
 
@@ -32,7 +32,8 @@ def index(request, filtro=None):
         entries = paginator.page(paginator.num_pages)
 
     context['entries'] = entries
-    context['filtro'] = filtro
+    context['kind'] = kind
+    context['kinds'] = EntryTypes
     return render(request, 'index.html', context)
 
 
