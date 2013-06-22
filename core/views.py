@@ -10,10 +10,15 @@ from entry.models import Entry
 from entry.forms import NewEntryForm
 
 
-def index(request):
+def index(request, filtro='all'):
     context = {}
-
-    entries = Entry.objects.filter(approved=True)
+    
+    if filtro is 'all':
+        entries = Entry.objects.filter(approved=True)
+    elif filtro in ['evento', 'link', 'video']:
+        entries = Entry.objects.filter(approved=True, kind=filtro)
+    else:
+        return False
 
     paginator = Paginator(entries, 15)
 
@@ -26,6 +31,7 @@ def index(request):
         entries = paginator.page(paginator.num_pages)
 
     context['entries'] = entries
+    context['filtro'] = filtro
     return render(request, 'index.html', context)
 
 
