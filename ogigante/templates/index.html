@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load formatlink %}
 {% block content %}
     {% load url from future %}
     
@@ -31,7 +31,7 @@
                 <div class="fb-like" data-href="http://ogiganteacordou.org{% url 'entry' entry.id %}" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
             </h4>
             <iframe id="ytplayer" type="text/html" width="640" height="390"
-            src="{{ entry.text }}"
+            src="{{ entry.text|format }}"
             frameborder="0"></iframe>
         {% else %}
             <h4>
