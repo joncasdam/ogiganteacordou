@@ -44,6 +44,7 @@ body {
 }
 .posts .post {
   padding: 30px;
+  word-wrap: break-word;
 }
 .posts .post .fb-like {
   float: right;
