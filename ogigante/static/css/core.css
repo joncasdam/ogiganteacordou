@@ -37,6 +37,9 @@ body {
   padding: 30px;
   margin-left: 100px;
 }
+.main .alert {
+  margin-left: 50px;
+}
 .posts {
   background-color: #FFF;
   border-radius: 10px;
