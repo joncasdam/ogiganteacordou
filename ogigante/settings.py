@@ -122,11 +122,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'core',
     'entry',
-<<<<<<< Updated upstream
     'bootstrapform',
     'south',
-=======
->>>>>>> Stashed changes
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
